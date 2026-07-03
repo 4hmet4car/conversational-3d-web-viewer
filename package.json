@@ -1,0 +1,37 @@
+{
+  "name": "conversational-3d-web-viewer",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Browser-based 3D interface with point-linked contextual explanations and AI-assisted follow-up conversations.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/4hmet4car/conversational-3d-web-viewer.git"
+  },
+  "keywords": [
+    "threejs",
+    "webgl",
+    "AI",
+    "artificial",
+    "intelligence"
+  ],
+  "author": "Ahmet Acar",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/4hmet4car/conversational-3d-web-viewer/issues"
+  },
+  "homepage": "https://github.com/4hmet4car/conversational-3d-web-viewer#readme",
+  "devDependencies": {
+    "vite": "^7.3.6",
+    "vite-plugin-glsl": "^1.6.0",
+    "vite-plugin-restart": "^2.0.0"
+  },
+  "dependencies": {
+    "three": "^0.185.1"
+  }
+}
