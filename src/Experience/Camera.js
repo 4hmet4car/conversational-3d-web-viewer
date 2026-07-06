@@ -20,10 +20,10 @@ export default class Camera
         this.setOrbitControls()
         this.setDebug()
 
-        // window.addEventListener('mousedown',()=>{
-        //     console.log(this.controls)
-        //     console.log(this.instance.position)
-        // })
+        window.addEventListener('mousedown',()=>{
+            console.log(this.controls)
+            console.log(this.instance.position)
+        })
     }
 
     // Perspective camera instance

@@ -30,6 +30,7 @@ export default class Heritage
         this.wallNormalTexture.wrapT = THREE.RepeatWrapping
         this.wallNormalTexture.repeat.x = 8
         this.wallNormalTexture.repeat.y = 8
+        // this.paintDiffuseTexture = this.resources.items.paintDiffuseTexture
         this.material = new THREE.MeshStandardMaterial({
             map: this.wallDiffuseTexture,
             aoMap: this.wallARMTexture,

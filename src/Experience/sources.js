@@ -33,4 +33,9 @@ export default [
         type: 'texture',
         path: '/textures/wall_arm.jpg'
     },
+    {
+        name: 'paintDiffuseTexture',
+        type: 'texture',
+        path: '/textures/paint_diffuse.png'
+    },
 ]
