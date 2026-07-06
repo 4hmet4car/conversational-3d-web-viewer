@@ -20,19 +20,24 @@ export default class Heritage
         this.wallDiffuseTexture.wrapT = THREE.RepeatWrapping
         this.wallDiffuseTexture.repeat.x = 8
         this.wallDiffuseTexture.repeat.y = 8
+
         this.wallARMTexture = this.resources.items.wallARMTexture
         this.wallARMTexture.wrapS = THREE.RepeatWrapping
         this.wallARMTexture.wrapT = THREE.RepeatWrapping
         this.wallARMTexture.repeat.x = 8
         this.wallARMTexture.repeat.y = 8
+
         this.wallNormalTexture = this.resources.items.wallNormalTexture
         this.wallNormalTexture.wrapS = THREE.RepeatWrapping
         this.wallNormalTexture.wrapT = THREE.RepeatWrapping
         this.wallNormalTexture.repeat.x = 8
         this.wallNormalTexture.repeat.y = 8
-        // this.paintDiffuseTexture = this.resources.items.paintDiffuseTexture
+
+        this.paintDiffuseTexture = this.resources.items.paintDiffuseTexture
+        this.paintDiffuseTexture.flipY = false
+
         this.material = new THREE.MeshStandardMaterial({
-            map: this.wallDiffuseTexture,
+            map: this.paintDiffuseTexture,
             aoMap: this.wallARMTexture,
             roughness: this.wallARMTexture,
             metalnessMap: this.wallARMTexture,

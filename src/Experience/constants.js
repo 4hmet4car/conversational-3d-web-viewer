@@ -1,5 +1,5 @@
 export const CAMERA = {
-    FOV: 50,
+    FOV: 100,
     POSITION_X: 0,
     POSITION_Y: 3.5,
     POSITION_Z: 0,
