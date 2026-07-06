@@ -15,8 +15,8 @@ export default class Camera
         this.canvas = this.experience.canvas
         this.debug = this.experience.debug
 
-        // this.setPerspectiveCameraInstance()
-        this.setOrtographicCameraInstance()
+        this.setPerspectiveCameraInstance()
+        // this.setOrtographicCameraInstance()
         this.setOrbitControls()
         this.setDebug()
 

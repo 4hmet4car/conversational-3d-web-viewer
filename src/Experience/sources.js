@@ -13,31 +13,24 @@
  */
 
 export default [
-    // {
-    //     name: 'environmentMapTexture',
-    //     type: 'cubeTexture',
-    //     path: [
-    //         '/textures/environmentMaps/0/px.jpg',
-    //         '/textures/environmentMaps/0/nx.jpg',
-    //         '/textures/environmentMaps/0/py.jpg',
-    //         '/textures/environmentMaps/0/ny.jpg',
-    //         '/textures/environmentMaps/0/pz.jpg',
-    //         '/textures/environmentMaps/0/nz.jpg',
-    //     ]
-    // },
-    // {
-    //     name: 'leePerrySmithColorTexture',
-    //     type: 'texture',
-    //     path: '/models/LeePerrySmith/color.jpg'
-    // },
-    // {
-    //     name: 'suzanne',
-    //     type: 'gltfModel',
-    //     path: '/suzanne.glb'
-    // },
-    // {
-    //     name: 'brainStemModel',
-    //     type: 'dracoModel',
-    //     path: '/models/BrainStem.glb'
-    // },
+    {
+        name: 'colombarioWallsModel',
+        type: 'dracoModel',
+        path: '/models/colombario_walls.glb'
+    },
+    {
+        name: 'wallDiffuseTexture',
+        type: 'texture',
+        path: '/textures/wall_diffuse.jpg'
+    },
+    {
+        name: 'wallNormalTexture',
+        type: 'texture',
+        path: '/textures/wall_normal.png'
+    },
+    {
+        name: 'wallARMTexture',
+        type: 'texture',
+        path: '/textures/wall_arm.jpg'
+    },
 ]

@@ -1,4 +1,5 @@
 import Experience from "../Experience.js"
+import Environment from "./Environment.js"
 import Heritage from "./Heritage.js"
 
 
@@ -13,6 +14,7 @@ export default class World
         this.resources.on('ready', () =>
         {
             // Setup
+            this.environment = new Environment()
             this.heritage = new Heritage()
         })
 

@@ -1,16 +1,17 @@
 export const CAMERA = {
     FOV: 25,
-    POSITION_X: 7,
+    POSITION_X: -7,
     POSITION_Y: 7,
     POSITION_Z: 7,
     NEAR: 0.1,
     FAR: 100,
-    ZOOM: 0.4,
+    // ZOOM: 0.2,
+    ZOOM: 0.5,
 }
 
 export const ORBIT_CONTROLS = {
     TARGET_X: 0,
-    TARGET_Y: 0,
+    TARGET_Y: 2,
     TARGET_Z: 0,
 }
 
