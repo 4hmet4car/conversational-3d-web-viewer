@@ -107,6 +107,14 @@ export default class Heritage
             )
         }
 
+        this.columnMaterial = new THREE.MeshStandardMaterial({
+            map: this.wallDiffuseTexture,
+            aoMap: this.wallARMTexture,
+            roughnessMap: this.wallARMTexture,
+            metalnessMap: this.wallARMTexture,
+            normalMap: this.wallNormalTexture,
+        })
+
         this.floorMaterial = new THREE.MeshStandardMaterial({
             map: this.floorDiffuseTexture,
             aoMap: this.floorARMTexture,
@@ -126,9 +134,16 @@ export default class Heritage
         this.colombarioWallsModel = this.resources.items.colombarioWallsModel.scene.children[0]
         this.colombarioWallsModel.material = this.wallsMaterial
 
+        this.colombarioColumnLeftModel = this.resources.items.colombarioColumnModel.scene.children[0]
+        this.colombarioColumnLeftModel.material = this.columnMaterial
+
+        this.colombarioColumnRightModel = this.colombarioColumnLeftModel.clone()
+        this.colombarioColumnRightModel.material = this.columnMaterial
+        this.colombarioColumnRightModel.position.x = 1.30327
+
         this.floorMesh = new THREE.Mesh(this.floorGeometry, this.floorMaterial)
         this.floorMesh.rotation.x = -Math.PI * 0.5
 
-        this.scene.add(this.colombarioWallsModel, this.floorMesh)
+        this.scene.add(this.colombarioWallsModel, this.colombarioColumnLeftModel, this.colombarioColumnRightModel, this.floorMesh)
     }
 }

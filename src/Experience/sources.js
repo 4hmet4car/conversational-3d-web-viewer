@@ -19,6 +19,11 @@ export default [
         path: '/models/colombario_walls.glb'
     },
     {
+        name: 'colombarioColumnModel',
+        type: 'dracoModel',
+        path: '/models/colombario_column.glb'
+    },
+    {
         name: 'wallDiffuseTexture',
         type: 'texture',
         path: '/textures/wall_diffuse.jpg'
