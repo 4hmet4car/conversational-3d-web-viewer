@@ -38,4 +38,19 @@ export default [
         type: 'texture',
         path: '/textures/paint_diffuse.png'
     },
+        {
+        name: 'floorDiffuseTexture',
+        type: 'texture',
+        path: '/textures/floor_diffuse.jpg'
+    },
+    {
+        name: 'floorNormalTexture',
+        type: 'texture',
+        path: '/textures/floor_normal.png'
+    },
+    {
+        name: 'floorARMTexture',
+        type: 'texture',
+        path: '/textures/floor_arm.jpg'
+    },
 ]

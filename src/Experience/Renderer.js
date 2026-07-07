@@ -28,8 +28,8 @@ export default class Renderer
         this.instance.setClearColor(rendererParameters.clearColor)
         this.instance.setSize(this.sizes.width, this.sizes.height)
         this.instance.setPixelRatio(this.sizes.pixelRatio)
-        // this.instance.toneMapping = THREE.ACESFilmicToneMapping
-        // this.instance.toneMappingExposure = 3
+        this.instance.toneMapping = THREE.ACESFilmicToneMapping
+        // this.instance.toneMappingExposure = 2
     }
 
     setDebug()

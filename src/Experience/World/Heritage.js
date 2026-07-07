@@ -15,8 +15,9 @@ export default class Heritage
         this.resources = this.experience.resources
 
         this.setTextures()
-        this.setMaterial()
-        this.setModel()
+        this.setMaterials()
+        this.setGeometries()
+        this.setModels()
     }
 
     setTextures()
@@ -44,25 +45,43 @@ export default class Heritage
         this.paintDiffuseTexture.colorSpace = THREE.SRGBColorSpace
         this.paintDiffuseTexture.flipY = false
 
-        this.customUniforms = {
+        this.customWallsMaterialUniforms = {
             uPaintDiffuseTexture: { value: this.paintDiffuseTexture }
         }
+
+        this.floorDiffuseTexture = this.resources.items.floorDiffuseTexture
+        this.floorDiffuseTexture.colorSpace = THREE.SRGBColorSpace
+        this.floorDiffuseTexture.wrapS = THREE.RepeatWrapping
+        this.floorDiffuseTexture.wrapT = THREE.RepeatWrapping
+        this.floorDiffuseTexture.repeat.x = 5
+        this.floorDiffuseTexture.repeat.y = 5
+
+        this.floorARMTexture = this.resources.items.floorARMTexture
+        this.floorARMTexture.wrapS = THREE.RepeatWrapping
+        this.floorARMTexture.wrapT = THREE.RepeatWrapping
+        this.floorARMTexture.repeat.x = 5
+        this.floorARMTexture.repeat.y = 5
+
+        this.floorNormalTexture = this.resources.items.floorNormalTexture
+        this.floorNormalTexture.wrapS = THREE.RepeatWrapping
+        this.floorNormalTexture.wrapT = THREE.RepeatWrapping
+        this.floorNormalTexture.repeat.x = 5
+        this.floorNormalTexture.repeat.y = 5
     }
 
-    setMaterial()
+    setMaterials()
     {
-        this.material = new THREE.MeshStandardMaterial({
-            transparent: true,
+        this.wallsMaterial = new THREE.MeshStandardMaterial({
             map: this.wallDiffuseTexture,
             aoMap: this.wallARMTexture,
-            roughness: this.wallARMTexture,
+            roughnessMap: this.wallARMTexture,
             metalnessMap: this.wallARMTexture,
             normalMap: this.wallNormalTexture,
         })
 
-        this.material.onBeforeCompile = (shader) =>
+        this.wallsMaterial.onBeforeCompile = (shader) =>
         {
-            shader.uniforms.uPaintDiffuseTexture = this.customUniforms.uPaintDiffuseTexture
+            shader.uniforms.uPaintDiffuseTexture = this.customWallsMaterialUniforms.uPaintDiffuseTexture
 
             // Vertex varying injection
             shader.vertexShader = shader.vertexShader.replace(
@@ -74,7 +93,7 @@ export default class Heritage
                 '#include <fog_vertex>',
                 vertexVaryingAssigmentInjection
             )
-            
+
             // Fragment uniform, varying injection
             shader.fragmentShader = shader.fragmentShader.replace(
                 '#include <common>',
@@ -86,15 +105,30 @@ export default class Heritage
                 '#include <map_fragment>',
                 fragmentTextureInjection
             )
-
-            console.log(shader.vertexShader)
         }
+
+        this.floorMaterial = new THREE.MeshStandardMaterial({
+            map: this.floorDiffuseTexture,
+            aoMap: this.floorARMTexture,
+            roughnessMap: this.floorARMTexture,
+            metalnessMap: this.floorARMTexture,
+            normalMap: this.floorNormalTexture,
+        })
     }
 
-    setModel()
+    setGeometries()
     {
-        this.model = this.resources.items.colombarioWallsModel.scene.children[0]
-        this.model.material = this.material
-        this.scene.add(this.model)
+        this.floorGeometry = new THREE.PlaneGeometry(7.5,7.5)
+    }
+
+    setModels()
+    {
+        this.colombarioWallsModel = this.resources.items.colombarioWallsModel.scene.children[0]
+        this.colombarioWallsModel.material = this.wallsMaterial
+
+        this.floorMesh = new THREE.Mesh(this.floorGeometry, this.floorMaterial)
+        this.floorMesh.rotation.x = -Math.PI * 0.5
+
+        this.scene.add(this.colombarioWallsModel, this.floorMesh)
     }
 }
