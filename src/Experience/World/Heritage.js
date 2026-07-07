@@ -22,6 +22,9 @@ export default class Heritage
 
     setTextures()
     {
+        this.potDiffuseTexture = this.resources.items.potDiffuseTexture
+        this.potDiffuseTexture.colorSpace = THREE.SRGBColorSpace
+
         this.wallDiffuseTexture = this.resources.items.wallDiffuseTexture
         this.wallDiffuseTexture.colorSpace = THREE.SRGBColorSpace
         this.wallDiffuseTexture.wrapS = THREE.RepeatWrapping
@@ -71,6 +74,10 @@ export default class Heritage
 
     setMaterials()
     {
+        this.potMaterial = new THREE.MeshStandardMaterial({
+            map: this.potDiffuseTexture,
+        })
+
         this.wallsMaterial = new THREE.MeshStandardMaterial({
             map: this.wallDiffuseTexture,
             aoMap: this.wallARMTexture,
@@ -134,16 +141,24 @@ export default class Heritage
         this.colombarioWallsModel = this.resources.items.colombarioWallsModel.scene.children[0]
         this.colombarioWallsModel.material = this.wallsMaterial
 
-        this.colombarioColumnLeftModel = this.resources.items.colombarioColumnModel.scene.children[0]
-        this.colombarioColumnLeftModel.material = this.columnMaterial
+        this.colombarioStairModel = this.resources.items.colombarioStairModel.scene.children[0]
+        this.colombarioStairModel.material = this.columnMaterial
 
-        this.colombarioColumnRightModel = this.colombarioColumnLeftModel.clone()
-        this.colombarioColumnRightModel.material = this.columnMaterial
-        this.colombarioColumnRightModel.position.x = 1.30327
+        this.colombarioColumnModel = this.resources.items.colombarioColumnModel.scene.children[0]
+        this.colombarioColumnModel.material = this.columnMaterial
+
+        this.colombarioPotsModel = this.resources.items.colombarioPotsModel.scene.children[0]
+        this.colombarioPotsModel.material = this.potMaterial
 
         this.floorMesh = new THREE.Mesh(this.floorGeometry, this.floorMaterial)
         this.floorMesh.rotation.x = -Math.PI * 0.5
 
-        this.scene.add(this.colombarioWallsModel, this.colombarioColumnLeftModel, this.colombarioColumnRightModel, this.floorMesh)
+        this.scene.add(
+            this.colombarioWallsModel,
+            this.colombarioStairModel,
+            this.colombarioColumnModel,
+            this.colombarioPotsModel,
+            this.floorMesh
+        )
     }
 }

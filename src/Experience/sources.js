@@ -24,6 +24,21 @@ export default [
         path: '/models/colombario_column.glb'
     },
     {
+        name: 'colombarioStairModel',
+        type: 'dracoModel',
+        path: '/models/colombario_stair.glb'
+    },
+    {
+        name: 'colombarioPotsModel',
+        type: 'dracoModel',
+        path: '/models/colombario_pots.glb'
+    },
+    {
+        name: 'potDiffuseTexture',
+        type: 'texture',
+        path: '/textures/pot_diffuse.jpg'
+    },
+    {
         name: 'wallDiffuseTexture',
         type: 'texture',
         path: '/textures/wall_diffuse.jpg'

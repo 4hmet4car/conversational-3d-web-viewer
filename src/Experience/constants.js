@@ -9,7 +9,7 @@ export const CAMERA = {
 }
 
 export const ORBIT_CONTROLS = {
-    TARGET_X: 0.01,
+    TARGET_X: -0.01,
     TARGET_Y: 3.5,
     TARGET_Z: 0,
 }
