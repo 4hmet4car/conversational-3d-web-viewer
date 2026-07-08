@@ -191,9 +191,12 @@ export default class Heritage
             const screenPosition = point.position.clone()
             screenPosition.project(this.camera.instance)
 
-            const translateX = screenPosition.x * this.sizes.width * 0.5
-            const translateY = -screenPosition.y * this.sizes.height * 0.5
-            point.element.style.transform = `translate(${translateX}px, ${translateY}px)`
+            if (screenPosition.z > -1 && screenPosition.z < 1)
+            {
+                const translateX = screenPosition.x * this.sizes.width * 0.5
+                const translateY = -screenPosition.y * this.sizes.height * 0.5
+                point.element.style.transform = `translate(${translateX}px, ${translateY}px)`
+            }
         }
     }
 }

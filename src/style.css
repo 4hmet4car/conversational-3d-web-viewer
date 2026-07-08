@@ -27,31 +27,44 @@ body {
     left: 50%;
 }
 
-.point:hover .text {
+.point:hover .text,
+.point:hover .title {
     opacity: 1;
-}
-
-.point.visible .label {
-    transform: scale(1, 1);
 }
 
 .point .label {
     position: absolute;
-    top: -20px;
-    left: -20px;
-    width: 40px;
-    height: 40px;
+    top: -15px;
+    left: -15px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background: #ffffff;
     color: #000000;
     font-family: ArchivoVariableFont;
     text-align: center;
-    line-height: 40px;
+    line-height: 30px;
     font-weight: 1000;
     font-size: 14px;
-    cursor: pointer;
-    transform: scale(0.001, 0.001);
-    transition: transform 0.3s;
+    cursor: help;
+}
+
+.point .title {
+    position: absolute;
+    width: 200px;
+    left: -120px;
+    padding: 10px 20px 10px 20px;
+    border-radius: 20px 20px 0px 0px;
+    background: #ffffff;
+    color: #000000;
+    line-height: 1.3em;
+    font-family: ArchivoVariableFont;
+    text-align: center;
+    font-weight: 1000;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
 }
 
 .point .text {
@@ -59,8 +72,9 @@ body {
     top: 30px;
     width: 200px;
     left: -120px;
-    padding: 20px;
-    border-radius: 20px;
+    padding: 20px 20px 15px 20px;
+    box-shadow: inset -1px 0 0 #ffffff, inset 0 -1px 0 #ffffff, inset 1px 0 0 #ffffff, inset 0 0 0 #ffffff;
+    border-radius: 0px 0px 20px 20px;
     background: #000000a4;
     color: #ffffff;
     line-height: 1.3em;
