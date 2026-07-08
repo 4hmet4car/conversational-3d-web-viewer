@@ -209,9 +209,14 @@ export default class Heritage
 
             if (screenPosition.z > -1 && screenPosition.z < 1)
             {
+                point.element.classList.add('visible')
                 const translateX = screenPosition.x * this.sizes.width * 0.5
                 const translateY = -screenPosition.y * this.sizes.height * 0.5
                 point.element.style.transform = `translate(${translateX}px, ${translateY}px)`
+            }
+            else
+            {
+                point.element.classList.remove('visible')
             }
         }
     }
