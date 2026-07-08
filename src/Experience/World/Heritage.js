@@ -180,7 +180,23 @@ export default class Heritage
             {
                 position: new THREE.Vector3(-0.146561, 3.03457, -2.32326),
                 element: document.querySelector('.point-0')
-            }
+            },
+            {
+                position: new THREE.Vector3(-0.901538, 3.3, -0.364056),
+                element: document.querySelector('.point-1')
+            },
+            {
+                position: new THREE.Vector3(0.490835, 3.325, 2.32326),
+                element: document.querySelector('.point-2')
+            },
+            {
+                position: new THREE.Vector3(-1.91373, 4.15, 2.20213),
+                element: document.querySelector('.point-3')
+            },
+            {
+                position: new THREE.Vector3(3.3751, 4.2, 1.2),
+                element: document.querySelector('.point-4')
+            },
         ]
     }
 
