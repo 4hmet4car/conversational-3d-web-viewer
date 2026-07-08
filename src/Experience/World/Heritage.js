@@ -140,18 +140,27 @@ export default class Heritage
     {
         this.colombarioWallsModel = this.resources.items.colombarioWallsModel.scene.children[0]
         this.colombarioWallsModel.material = this.wallsMaterial
+        this.colombarioWallsModel.castShadow = true
+        this.colombarioWallsModel.receiveShadow = true
 
         this.colombarioStairModel = this.resources.items.colombarioStairModel.scene.children[0]
         this.colombarioStairModel.material = this.columnMaterial
+        this.colombarioStairModel.castShadow = true
+        this.colombarioStairModel.receiveShadow = true
 
         this.colombarioColumnModel = this.resources.items.colombarioColumnModel.scene.children[0]
         this.colombarioColumnModel.material = this.columnMaterial
+        this.colombarioColumnModel.castShadow = true
+        this.colombarioColumnModel.receiveShadow = true
 
         this.colombarioPotsModel = this.resources.items.colombarioPotsModel.scene.children[0]
         this.colombarioPotsModel.material = this.potMaterial
+        this.colombarioPotsModel.castShadow = true
+        this.colombarioPotsModel.receiveShadow = true
 
         this.floorMesh = new THREE.Mesh(this.floorGeometry, this.floorMaterial)
         this.floorMesh.rotation.x = -Math.PI * 0.5
+        this.floorMesh.receiveShadow = true
 
         this.scene.add(
             this.colombarioWallsModel,

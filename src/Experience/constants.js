@@ -9,9 +9,9 @@ export const CAMERA = {
 }
 
 export const ORBIT_CONTROLS = {
-    TARGET_X: -0.01,
+    TARGET_X: 0,
     TARGET_Y: 3.5,
-    TARGET_Z: 0,
+    TARGET_Z: -0.01,
 }
 
 export const PI = 3.1415926535897932384626433832795

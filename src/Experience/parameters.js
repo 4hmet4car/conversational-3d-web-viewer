@@ -6,15 +6,19 @@ export const cameraParameters = {
 }
 
 export const rendererParameters = {
-    clearColor: '#000000',
+    clearColor: '#ffffff',
 }
 
 export const environmentParameters = {
     pointLight: {
         color: '#ffffff',
-        intensity: 30,
-        positionX: 0,
-        positionY: 5,
-        positionZ: 0,
-    }
+        intensity: 10,
+        positionX: 2.7,
+        positionY: 4,
+        positionZ: -1.5,
+    },
+    ambientLight: {
+        color: '#ffffff',
+        intensity: 0.15,
+    },
 }
