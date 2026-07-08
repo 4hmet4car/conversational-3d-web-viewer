@@ -97,6 +97,8 @@ export default class Resources extends EventEmitter
 
         this.loaded++
 
+        this.trigger('itemLoaded')
+
         if (this.loaded === this.toLoad)
         {
             this.trigger('ready')

@@ -8,6 +8,7 @@ import Camera from './Camera.js'
 import Renderer from './Renderer.js'
 import World from './World/World.js'
 import Resources from './Utils/Resources.js'
+import Splash from './Splash.js'
 
 import sources from './sources.js'
 // import RayCursor from './Utils/RayCursor.js'
@@ -38,6 +39,7 @@ export default class Experience
         // this.cursor = new Cursor(this.sizes) 
         this.scene = new THREE.Scene()
         this.resources = new Resources(sources)
+        this.splash = new Splash()
         this.camera = new Camera()
         // this.rayCursor = new RayCursor(this.cursor, this.camera)
         this.renderer = new Renderer()

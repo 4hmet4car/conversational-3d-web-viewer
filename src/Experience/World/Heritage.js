@@ -200,7 +200,7 @@ export default class Heritage
         ]
     }
 
-    update()
+    movePointsOfInterest()
     {
         for (const point of this.pointsOfInterest)
         {
@@ -219,5 +219,10 @@ export default class Heritage
                 point.element.classList.remove('visible')
             }
         }
+    }
+
+    update()
+    {
+        this.movePointsOfInterest()
     }
 }
