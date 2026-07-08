@@ -13,11 +13,14 @@ export default class Heritage
         this.experience = new Experience()
         this.scene = this.experience.scene
         this.resources = this.experience.resources
+        this.camera = this.experience.camera
+        this.sizes = this.experience.sizes
 
         this.setTextures()
         this.setMaterials()
         this.setGeometries()
         this.setModels()
+        this.setPointsOfInterest()
     }
 
     setTextures()
@@ -133,7 +136,7 @@ export default class Heritage
 
     setGeometries()
     {
-        this.floorGeometry = new THREE.PlaneGeometry(7.5,7.5)
+        this.floorGeometry = new THREE.PlaneGeometry(7.5, 7.5)
     }
 
     setModels()
@@ -169,5 +172,28 @@ export default class Heritage
             this.colombarioPotsModel,
             this.floorMesh
         )
+    }
+
+    setPointsOfInterest()
+    {
+        this.pointsOfInterest = [
+            {
+                position: new THREE.Vector3(-0.146561, 3.03457, -2.32326),
+                element: document.querySelector('.point-0')
+            }
+        ]
+    }
+
+    update()
+    {
+        for (const point of this.pointsOfInterest)
+        {
+            const screenPosition = point.position.clone()
+            screenPosition.project(this.camera.instance)
+
+            const translateX = screenPosition.x * this.sizes.width * 0.5
+            const translateY = -screenPosition.y * this.sizes.height * 0.5
+            point.element.style.transform = `translate(${translateX}px, ${translateY}px)`
+        }
     }
 }

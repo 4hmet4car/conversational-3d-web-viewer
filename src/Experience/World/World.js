@@ -31,12 +31,9 @@ export default class World
 
     update()
     {
-        // if (this.suzanne && this.sphere && this.torusKnot && this.halftone)
-        // {
-        //     this.halftone.update()
-        //     this.suzanne.update()
-        //     this.sphere.update()
-        //     this.torusKnot.update()
-        // }
+        if (this.heritage && this.environment)
+        {
+            this.heritage.update()
+        }
     }
 }
