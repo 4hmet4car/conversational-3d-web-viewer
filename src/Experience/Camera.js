@@ -18,6 +18,8 @@ export default class Camera
         this.setPerspectiveCameraInstance()
         // this.setOrtographicCameraInstance()
         this.setOrbitControls()
+        this.setPanLimit(ORBIT_CONTROLS.MIN_PAN, ORBIT_CONTROLS.MAX_PAN)
+        // this.setZoomLimit(ORBIT_CONTROLS.MIN_ZOOM, ORBIT_CONTROLS.MAX_ZOOM)
         this.setDebug()
 
         // window.addEventListener('mousedown',()=>{
@@ -36,10 +38,10 @@ export default class Camera
             CAMERA.FAR)
 
         this.instance.position.set(
-            CAMERA.POSITION_X / CAMERA.ZOOM,
-            CAMERA.POSITION_Y / CAMERA.ZOOM,
-            CAMERA.POSITION_Z / CAMERA.ZOOM)
-       
+            CAMERA.POSITION_X,
+            CAMERA.POSITION_Y,
+            CAMERA.POSITION_Z)
+
         this.scene.add(this.instance)
     }
 
@@ -83,6 +85,22 @@ export default class Camera
         this.controls.enableDamping = cameraParameters.enableDamping
     }
 
+    setPanLimit(minPan, maxPan)
+    {
+        this.limitPan = true
+
+        this.minPan = new THREE.Vector3(minPan.x, minPan.y, minPan.z)
+        this.maxPan = new THREE.Vector3(maxPan.x, maxPan.y, maxPan.z)
+
+        this.originalTarget = new THREE.Vector3()
+    }
+
+    // setZoomLimit(minZoom, maxZoom)
+    // {
+    //     this.controls.minZoom = minZoom
+    //     this.controls.maxZoom = maxZoom
+    // }
+
     setDebug()
     {
         //Debug
@@ -96,21 +114,21 @@ export default class Camera
                 {
                     this.controls.enablePan = cameraParameters.enablePan
                 })
-            
+
             this.debugFolder
                 .add(cameraParameters, 'enableZoom')
                 .onChange(() =>
                 {
                     this.controls.enableZoom = cameraParameters.enableZoom
                 })
-            
+
             this.debugFolder
                 .add(cameraParameters, 'enableRotate')
                 .onChange(() =>
                 {
                     this.controls.enableRotate = cameraParameters.enableRotate
                 })
-            
+
             this.debugFolder
                 .add(cameraParameters, 'enableDamping')
                 .onChange(() =>
@@ -137,5 +155,13 @@ export default class Camera
     update()
     {
         this.controls.update()
+
+        if (this.limitPan)
+        {
+            this.originalTarget.copy(this.controls.target)
+            this.controls.target.clamp(this.minPan, this.maxPan)
+            const diff = new THREE.Vector3().subVectors(this.originalTarget, this.controls.target)
+            this.instance.position.sub(diff)
+        }
     }
 }
