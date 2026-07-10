@@ -18,7 +18,7 @@ export default class Camera
         this.setPerspectiveCameraInstance()
         // this.setOrtographicCameraInstance()
         this.setOrbitControls()
-        this.setPanLimit(ORBIT_CONTROLS.MIN_PAN, ORBIT_CONTROLS.MAX_PAN)
+        // this.setPanLimit(ORBIT_CONTROLS.MIN_PAN, ORBIT_CONTROLS.MAX_PAN)
         // this.setZoomLimit(ORBIT_CONTROLS.MIN_ZOOM, ORBIT_CONTROLS.MAX_ZOOM)
         this.setDebug()
 
@@ -85,15 +85,15 @@ export default class Camera
         this.controls.enableDamping = cameraParameters.enableDamping
     }
 
-    setPanLimit(minPan, maxPan)
-    {
-        this.limitPan = true
+    // setPanLimit(minPan, maxPan)
+    // {
+    //     this.limitPan = true
 
-        this.minPan = new THREE.Vector3(minPan.x, minPan.y, minPan.z)
-        this.maxPan = new THREE.Vector3(maxPan.x, maxPan.y, maxPan.z)
+    //     this.minPan = new THREE.Vector3(minPan.x, minPan.y, minPan.z)
+    //     this.maxPan = new THREE.Vector3(maxPan.x, maxPan.y, maxPan.z)
 
-        this.originalTarget = new THREE.Vector3()
-    }
+    //     this.originalTarget = new THREE.Vector3()
+    // }
 
     // setZoomLimit(minZoom, maxZoom)
     // {
