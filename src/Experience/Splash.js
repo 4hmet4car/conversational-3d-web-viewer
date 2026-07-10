@@ -22,10 +22,10 @@ export default class Splash
                 this.splashElement.classList.remove('visible')
             }, 500)
 
-            setTimeout(() =>
-            {
-                this.splashElement.remove()
-            }, 2500)
+            // setTimeout(() =>
+            // {
+            //     this.splashElement.remove()
+            // }, 2500)
         })
     }
 }
