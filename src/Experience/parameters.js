@@ -1,6 +1,6 @@
 export const cameraParameters = {
     enablePan: true,
-    enableZoom: false,
+    enableZoom: true,
     enableRotate: true,
     enableDamping: true,
 }

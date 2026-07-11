@@ -18,6 +18,7 @@ export const ORBIT_CONTROLS = {
 
     // MIN_ZOOM: 0.4,
     // MAX_ZOOM: 5
+    MAX_DISTANCE: 1,
 }
 
 export const PI = 3.1415926535897932384626433832795
