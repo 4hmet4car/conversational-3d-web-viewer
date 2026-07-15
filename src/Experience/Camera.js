@@ -83,7 +83,7 @@ export default class Camera
         this.controls.enableZoom = cameraParameters.enableZoom
         this.controls.enableRotate = cameraParameters.enableRotate
         this.controls.enableDamping = cameraParameters.enableDamping
-        this.controls.maxDistance = ORBIT_CONTROLS.MAX_DISTANCE
+        // this.controls.maxDistance = ORBIT_CONTROLS.MAX_DISTANCE
     }
 
     // setPanLimit(minPan, maxPan)
