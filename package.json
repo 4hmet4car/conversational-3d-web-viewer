@@ -1,7 +1,7 @@
 {
   "name": "conversational-3d-web-viewer",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "description": "Browser-based 3D interface with point-linked contextual explanations and AI-assisted follow-up conversations.",
   "main": "index.js",
@@ -33,6 +33,10 @@
   },
   "dependencies": {
     "lil-gui": "^0.21.0",
+    "stats.js": "^0.17.0",
     "three": "^0.185.1"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true
   }
 }
