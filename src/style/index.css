@@ -1,0 +1,9 @@
+@import url('./variables.css');
+@import url('./general.css');
+@import url('./webGL.css');
+@import url('./PointOfInterest/pointOfInterest.css');
+@import url('./PointOfInterest/anchor.css');
+@import url('./PointOfInterest/ChatBox/chatBox.css');
+@import url('./PointOfInterest/ChatBox/llmAnswer.css');
+@import url('./PointOfInterest/ChatBox/userQuestion.css');
+@import url('./PointOfInterest/ChatBox/inputField.css');

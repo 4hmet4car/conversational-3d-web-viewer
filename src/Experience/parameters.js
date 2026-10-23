@@ -1,24 +1,41 @@
 export const cameraParameters = {
-    enablePan: true,
-    enableZoom: false,
+    enablePan: false,
+    enableZoom: true,
     enableRotate: true,
-    enableDamping: true,
+    enableDamping: false,
 }
 
 export const rendererParameters = {
-    clearColor: '#ffffff',
+    clearColor: '#000000',
 }
 
-export const environmentParameters = {
-    pointLight: {
-        color: '#ffffff',
-        intensity: 10,
-        positionX: 2.7,
-        positionY: 4,
-        positionZ: -1.5,
+export const postProcessingParameters = {
+    dotScreenPass: {
+        enabled: false,
     },
-    ambientLight: {
-        color: '#ffffff',
-        intensity: 0.15,
+    glitchPass: {
+        enabled: false,
+        goWild: false,
+    },
+    rgbShiftPass: {
+        enabled: false,
+    },
+    unrealBloomPass: {
+        enabled: false,
+        strength: 0.3,
+        radius: 1,
+        threshold: 0.6,
+    },
+    tintPass: {
+        enabled: false,
+        r: 1,
+        g: 0,
+        b: 0,
+    },
+    displacementPass: {
+        enabled: true,
+        r: 0,
+        g: 1,
+        b: 0,
     },
 }

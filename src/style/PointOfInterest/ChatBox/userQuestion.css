@@ -1,0 +1,11 @@
+.userQuestion
+{
+    background: #ffffff;
+    color: #000000;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: right;      /*This is to align it to the left*/
+    align-self: flex-end;   /*This is to align it to the left*/
+    max-width: 80%;         /*So that it takes up 80% of the available space*/
+    word-break: break-word; /*This lets the question to break into multiple lines*/
+}

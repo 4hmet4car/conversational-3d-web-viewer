@@ -1,0 +1,10 @@
+.llmAnswer
+{
+    background: #ffffff25;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: left;       /*This is to align it to the left*/
+    align-self: flex-start; /*This is to align it to the left*/
+    max-width: 80%;         /*So that it takes up 80% of the available space*/
+    word-break: break-word; /*This lets the question to break into multiple lines*/
+}

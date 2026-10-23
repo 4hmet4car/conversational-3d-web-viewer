@@ -1,0 +1,25 @@
+.pointOfInterest
+{
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    /* border: 2px dotted rgb(96 139 168); */
+
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 14px;
+    
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    pointer-events: none;
+
+    will-change: transform;
+}
+
+.pointOfInterest.active
+{
+    z-index: 9999;
+}

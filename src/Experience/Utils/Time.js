@@ -22,7 +22,8 @@ export default class Time extends EventEmitter
     tick()
     {
         const currentTime = performance.now()
-        this.delta = currentTime - this.current
+        // It is clamped to 30 fps to avoid long frames issue
+        this.delta = Math.min(currentTime - this.current, 1000/30)
         this.current = currentTime
         this.elapsed = this.current - this.start
         this.secondsElapsed = this.elapsed * 0.001

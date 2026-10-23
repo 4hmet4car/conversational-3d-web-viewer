@@ -10,8 +10,9 @@ export default class Cursor extends EventEmitter
         this.sizes = sizes
 
         // Setup
-        this.position = new THREE.Vector2()
-        this.speed = new THREE.Vector2()
+        this.position = new THREE.Vector2(9999,9999)
+        this.velocity = new THREE.Vector2(0,0)
+        this.speed = 0
         this.lastMoveTime = 0
 
         // Cursor move event
@@ -21,20 +22,16 @@ export default class Cursor extends EventEmitter
 
     pointerMove = (_event) =>
     {
-        const now = _event.timeStamp
-
         const previousX = this.position.x
         const previousY = this.position.y
 
         this.position.x = (_event.clientX / this.sizes.width) * 2 - 1
         this.position.y = -((_event.clientY / this.sizes.height) * 2 - 1)
 
-        const delta = Math.max(now - this.lastMoveTime, 0.001)
+        this.velocity.x = this.position.x - previousX
+        this.velocity.y = this.position.y - previousY
 
-        this.lastMoveTime = now
-
-        this.speed.x = (this.position.x - previousX) / delta
-        this.speed.y = (this.position.y - previousY) / delta
+        this.speed = this.velocity.length()
         
         this.trigger('pointermove')
     }
@@ -50,7 +47,8 @@ export default class Cursor extends EventEmitter
     {
         // Converge the cursor speed to 0, if not the last speed will stay as the
         // current speed indefinetely
-        this.speed.x += (0 - this.speed.x) * 0.1
-        this.speed.y += (0 - this.speed.y) * 0.1
+        this.velocity.x += (0 - this.velocity.x) * 0.1
+        this.velocity.y += (0 - this.velocity.y) * 0.1
+        this.speed = this.velocity.length()
     }
 }

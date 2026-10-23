@@ -6,6 +6,7 @@
  * has each source as a seperate object.
  * 
  * -----------TYPES-----------
+ * --> image
  * --> cubeTexture
  * --> texture
  * --> gltfModel
@@ -13,64 +14,56 @@
  */
 
 export default [
+    // {
+    //     name: 'glowImage',
+    //     type: 'image',
+    //     path: '/glow.png'
+    // },
     {
-        name: 'colombarioWallsModel',
-        type: 'dracoModel',
-        path: '/models/colombario_walls.glb'
-    },
-    {
-        name: 'colombarioColumnModel',
-        type: 'dracoModel',
-        path: '/models/colombario_column.glb'
-    },
-    {
-        name: 'colombarioStairModel',
-        type: 'dracoModel',
-        path: '/models/colombario_stair.glb'
-    },
-    {
-        name: 'colombarioPotsModel',
-        type: 'dracoModel',
-        path: '/models/colombario_pots.glb'
+        name: 'environmentMapTexture',
+        type: 'cubeTexture',
+        path: [
+            '/textures/environmentMaps/0/px.jpg',
+            '/textures/environmentMaps/0/nx.jpg',
+            '/textures/environmentMaps/0/py.jpg',
+            '/textures/environmentMaps/0/ny.jpg',
+            '/textures/environmentMaps/0/pz.jpg',
+            '/textures/environmentMaps/0/nz.jpg',
+        ]
     },
     {
-        name: 'potDiffuseTexture',
-        type: 'texture',
-        path: '/textures/pot_diffuse.jpg'
+        name: 'heritage',
+        type: 'gltfModel',
+        path: '/models/DamagedHelmet/glTF/DamagedHelmet.gltf'
     },
-    {
-        name: 'wallDiffuseTexture',
-        type: 'texture',
-        path: '/textures/wall_diffuse.jpg'
-    },
-    {
-        name: 'wallNormalTexture',
-        type: 'texture',
-        path: '/textures/wall_normal.png'
-    },
-    {
-        name: 'wallARMTexture',
-        type: 'texture',
-        path: '/textures/wall_arm.jpg'
-    },
-    {
-        name: 'paintDiffuseTexture',
-        type: 'texture',
-        path: '/textures/paint_diffuse.png'
-    },
-        {
-        name: 'floorDiffuseTexture',
-        type: 'texture',
-        path: '/textures/floor_diffuse.jpg'
-    },
-    {
-        name: 'floorNormalTexture',
-        type: 'texture',
-        path: '/textures/floor_normal.png'
-    },
-    {
-        name: 'floorARMTexture',
-        type: 'texture',
-        path: '/textures/floor_arm.jpg'
-    },
+    // {
+    //     name: 'displacementMap',
+    //     type: 'texture',
+    //     path: '/textures/displacementMap.png'
+    // },
+    // {
+    //     name: 'pictureTexture2',
+    //     type: 'texture',
+    //     path: '/picture-2.png'
+    // },
+    // {
+    //     name: 'pictureTexture3',
+    //     type: 'texture',
+    //     path: '/picture-3.png'
+    // },
+    // {
+    //     name: 'pictureTexture4',
+    //     type: 'texture',
+    //     path: '/picture-4.png'
+    // },
+    // {
+    //     name: 'gears',
+    //     type: 'dracoModel',
+    //     path: '/gears.glb'
+    // },
+    // {
+    //     name: 'spruitSunrise',
+    //     type: 'HDRTexture',
+    //     path: '/spruit_sunrise.hdr'
+    // },
 ]

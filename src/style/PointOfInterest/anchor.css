@@ -1,0 +1,29 @@
+.anchor
+{
+    height: var(--anchor-size);    
+    width: var(--anchor-size);
+    border-radius: 50%;
+    border: 1px solid #ffffff;
+    background: #000000bb;
+
+    color: #ffffff;
+    font-weight: 1000;
+    font-size: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+
+    cursor: pointer;
+
+    transform: scale(0);
+    transition: transform 0.3s;
+
+    pointer-events: auto;
+}
+
+.anchor.visible
+{
+    transform: scale(1);
+}

@@ -3,8 +3,7 @@
   "private": true,
   "version": "1.1.0",
   "type": "module",
-  "description": "Browser-based 3D interface with point-linked contextual explanations and AI-assisted follow-up conversations.",
-  "main": "index.js",
+  "description": "Browser-based 3D interface with point-linked contextual LLM interactions conversations.",
   "scripts": {
     "dev": "vite",
     "build": "vite build"
@@ -17,6 +16,8 @@
     "threejs",
     "webgl",
     "AI",
+    "LLM",
+    "cultural heritage",
     "artificial",
     "intelligence"
   ],
