@@ -17,7 +17,7 @@ export default class Environment
     {        
         this.environmentMap = this.resources.items.environmentMapTexture
         this.environmentMap.colorSpace = THREE.SRGBColorSpace
-        this.scene.background = this.environmentMap
+        // this.scene.background = this.environmentMap
         this.scene.environment = this.environmentMap
     }
 

@@ -1,5 +1,6 @@
 import glsl from 'vite-plugin-glsl'
 import restart from 'vite-plugin-restart'
+import simpleBackend from './dev/simpleBackend'
 
 export default {
     root: 'src/', // Sources files (typically where index.html is)
@@ -18,6 +19,7 @@ export default {
     plugins:
     [
         restart({ restart: [ '../static/**', ] }), // Restart server on static file change
-        glsl()
+        glsl(),
+        simpleBackend()
     ],
 }

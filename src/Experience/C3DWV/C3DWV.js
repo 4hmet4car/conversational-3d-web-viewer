@@ -1,7 +1,7 @@
 import Experience from '../Experience.js'
 import Environment from './Environment.js'
 import Heritage from './Heritage.js'
-import PointsOfInterest from './PointOfInterest/PointsOfInterest.js'
+import POIManager from './PointOfInterest/POIManager.js'
 
 export default class World
 {
@@ -15,7 +15,7 @@ export default class World
     {
         this.environment = new Environment()
         this.heritage = new Heritage()
-        this.pointsOfInterest = new PointsOfInterest()
+        this.POIManager = new POIManager()
     }
 
     resize()
@@ -28,9 +28,9 @@ export default class World
 
     update()
     {
-        if (this.pointsOfInterest)
+        if (this.POIManager)
         {
-            this.pointsOfInterest.update()
+            this.POIManager.update()
         }
     }
 }

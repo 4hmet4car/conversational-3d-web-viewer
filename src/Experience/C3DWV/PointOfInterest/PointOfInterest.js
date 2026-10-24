@@ -97,6 +97,41 @@ export default class PointOfInterest extends EventEmitter
         userQuestion.textContent = question
         this.chatBox.appendChild(userQuestion)
         this.chatBox.scrollTop = this.chatBox.scrollHeight //This scrolls everything down in the div
+
+        this.requestAnswer()
+    }
+
+    // This utilizes the fetch api to make a request to the specified end point
+    // Since fetch and response.json() return promises, the method is async
+    // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+    async requestAnswer()
+    {
+        try
+        {
+            // fetch() promise resolves when the server respond with headers and status code (initial handshake)
+            const serverResponse = await fetch('/api/chat')
+
+            if (!serverResponse.ok)
+            {
+                throw new Error(`Response status: ${serverResponse.status}`)
+            }
+
+            // response.json() promise resolves when entire text body finish downloading
+            const llmServerResponse = await serverResponse.json()
+            this.answerQuestion(llmServerResponse)
+        } catch (error)
+        {
+            console.error(error.message);
+        }
+    }
+
+    answerQuestion(llmServerResponse)
+    {
+        const llmAnswer = document.createElement('div')
+        llmAnswer.classList.add('llmAnswer')
+        llmAnswer.textContent = llmServerResponse.answer
+        this.chatBox.appendChild(llmAnswer)
+        this.chatBox.scrollTop = this.chatBox.scrollHeight
     }
 
     calculateScreenCoordinates()
