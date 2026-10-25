@@ -98,25 +98,35 @@ export default class PointOfInterest extends EventEmitter
         this.chatBox.appendChild(userQuestion)
         this.chatBox.scrollTop = this.chatBox.scrollHeight //This scrolls everything down in the div
 
-        this.requestAnswer()
+        this.requestAnswer(question)
     }
 
     // This utilizes the fetch api to make a request to the specified end point
     // Since fetch and response.json() return promises, the method is async
     // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-    async requestAnswer()
+    async requestAnswer(question)
     {
         try
         {
-            // fetch() promise resolves when the server respond with headers and status code (initial handshake)
-            const serverResponse = await fetch('/api/chat')
+            // fetch() promise resolves when the server responds with headers and status code (initial handshake)
+            // you use post since you are sending data to the backend
+            // you set header since many middleware look at it first to know how to parse the data in the body
+            // you stringify the json object bc you can not sent live json object with http but only rough text
+            const serverResponse = await fetch('/api/chat', {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ question: question }),
+            })
 
+            // response.ok is true for statuses from 200 through 299
             if (!serverResponse.ok)
             {
                 throw new Error(`Response status: ${serverResponse.status}`)
             }
 
-            // response.json() promise resolves when entire text body finish downloading
+            // response.json() promise resolves when entire text body finishes downloading
+            // .json() is a method that belongs to node.js responses
+            // .json() reads a response body and parses it as a json object
             const llmServerResponse = await serverResponse.json()
             this.answerQuestion(llmServerResponse)
         } catch (error)
