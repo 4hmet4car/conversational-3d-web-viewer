@@ -1,3 +1,5 @@
+import { GoogleGenAI } from "@google/genai"
+
 function verifyPostMethod(request, response, next)
 {
     // 405 is the "Method Not Allowed" client error response status code.
@@ -140,14 +142,44 @@ function validateParsedData(request, response, next)
     next()
 }
 
-function simplyRespond(request, response)
+async function simplyRespond(request, response)
 {
     // response is the Node.js HTTP response object.
     // Tell the client that the response body contains JSON.
     response.setHeader('Content-Type', 'application/json')
 
-    // Send the JSON text and mark the response as complete.
-    response.end(JSON.stringify({ answer: 'You asked: ' + request.parsedBody.question }))
+    try
+    {
+        const ai = new GoogleGenAI({
+            apiKey: process.env.GEMINI_API_KEY
+        })
+
+        const result = await ai.models.generateContent({
+            model: 'gemini-3.5-flash-lite',
+            contents: request.parsedBody.question
+        })
+
+        const answer = result.text
+
+        if (typeof answer !== 'string' || !answer.trim())
+        {
+            response.statusCode = 502
+            response.end(JSON.stringify({
+                error: 'Gemini did not return a text answer'
+            }))
+            return
+        }
+
+        // Send the JSON text and mark the response as complete.
+        response.end(JSON.stringify({ answer: answer }))
+    }
+    catch (error)
+    {
+        console.error('Gemini request failed:', error)
+
+        response.statusCode = 502
+        response.end(JSON.stringify({ error: 'Could not get an answer from Gemini' }))
+    }
 }
 
 

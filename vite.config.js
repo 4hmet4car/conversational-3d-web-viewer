@@ -4,6 +4,7 @@ import simpleBackend from './dev/simpleBackend'
 
 export default {
     root: 'src/', // Sources files (typically where index.html is)
+    envDir: '../', // Environment files location
     publicDir: '../static/', // Path from "root" to static assets (files that are served as they are)
     server:
     {

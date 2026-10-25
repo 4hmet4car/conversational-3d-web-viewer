@@ -33,6 +33,7 @@
     "vite-plugin-restart": "^2.0.0"
   },
   "dependencies": {
+    "@google/genai": "^2.31.0",
     "lil-gui": "^0.21.0",
     "stats.js": "^0.17.0",
     "three": "^0.185.1"
