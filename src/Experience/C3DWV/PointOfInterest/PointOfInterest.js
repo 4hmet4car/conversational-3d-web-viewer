@@ -80,7 +80,9 @@ export default class PointOfInterest extends EventEmitter
 
         this.inputField.addEventListener('keydown', (event) =>
         {
-            if (event.key === 'Enter')
+            // event.isComposing is for users that use IME (Input Method Editor)
+            // IME is used for special characters in Japanese, Chinese etc.
+            if (event.key === 'Enter' && !event.isComposing)
             {
                 const message = this.inputField.value.trim()
                 if (!message) return
@@ -106,6 +108,9 @@ export default class PointOfInterest extends EventEmitter
     // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
     async requestAnswer(question)
     {
+        this.inputField.disabled = true
+        const llmAnswer = this.prepareAnswer()
+
         try
         {
             // fetch() promise resolves when the server responds with headers and status code (initial handshake)
@@ -128,20 +133,30 @@ export default class PointOfInterest extends EventEmitter
             // .json() is a method that belongs to node.js responses
             // .json() reads a response body and parses it as a json object
             const llmServerResponse = await serverResponse.json()
-            this.answerQuestion(llmServerResponse)
+            this.answerQuestion(llmAnswer, llmServerResponse.answer)
         } catch (error)
         {
             console.error(error.message);
+            this.answerQuestion(llmAnswer, 'Try again later.')
         }
     }
 
-    answerQuestion(llmServerResponse)
+    prepareAnswer()
     {
         const llmAnswer = document.createElement('div')
         llmAnswer.classList.add('llmAnswer')
-        llmAnswer.textContent = llmServerResponse.answer
+        llmAnswer.textContent = "Waiting answer..."
         this.chatBox.appendChild(llmAnswer)
         this.chatBox.scrollTop = this.chatBox.scrollHeight
+        return llmAnswer
+    }
+
+    answerQuestion(llmAnswer, answer)
+    {
+        llmAnswer.textContent = answer
+        this.inputField.disabled = false
+        this.chatBox.scrollTop = this.chatBox.scrollHeight
+        if (this.active) this.inputField.focus()
     }
 
     calculateScreenCoordinates()
