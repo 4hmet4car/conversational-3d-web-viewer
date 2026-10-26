@@ -4,7 +4,7 @@ import EventEmitter from '../../Utils/EventEmitter.js'
 
 export default class PointOfInterest extends EventEmitter
 {
-    constructor(pointIndex, pointDescription, pointCoordinates, rayCaster)
+    constructor(pointIndex, pointDescription, pointCoordinates, rayCaster, heritage)
     {
         super()
 
@@ -17,6 +17,7 @@ export default class PointOfInterest extends EventEmitter
         this.pointDescription = pointDescription
         this.pointCoordinates = pointCoordinates
         this.rayCaster = rayCaster
+        this.heritage = heritage
 
         this.setPointOfInterest(this.pointCoordinates)
         this.setAnchor(this.pointIndex)
@@ -181,7 +182,7 @@ export default class PointOfInterest extends EventEmitter
     prepareAnswer()
     {
         const llmAnswer = document.createElement('div')
-        llmAnswer.classList.add('llmAnswer')
+        llmAnswer.classList.add('llmAnswer', 'waiting')
         llmAnswer.textContent = 'Waiting answer...'
 
         this.chatBox.appendChild(llmAnswer)
@@ -192,6 +193,8 @@ export default class PointOfInterest extends EventEmitter
 
     answerQuestion(llmAnswer, answer, question = null)
     {
+        llmAnswer.classList.remove('waiting')
+
         llmAnswer.textContent = answer
 
         this.inputField.disabled = false
@@ -224,8 +227,8 @@ export default class PointOfInterest extends EventEmitter
             this.camera.instance
         )
 
-        this.intersects = this.rayCaster.intersectObjects(
-            this.scene.children,
+        this.intersects = this.rayCaster.intersectObject(
+            this.heritage.collider,
             true
         )
     }
@@ -279,6 +282,7 @@ export default class PointOfInterest extends EventEmitter
     placePointOfInterest()
     {
         this.camera.instance.updateWorldMatrix(true, false)
+        this.heritage.collider.updateWorldMatrix(true, true)
 
         this.calculateScreenCoordinates()
         this.castRay()

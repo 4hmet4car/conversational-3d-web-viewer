@@ -10,15 +10,22 @@ export default class Heritage
         this.resources = this.experience.resources
 
         this.setHeritage()
+        this.setHeritageCollider()
         this.setMaterials()
     }
 
     setHeritage()
     {
-        this.heritage = this.resources.items.heritage.scene
-        this.heritage.scale.set(2.5, 2.5, 2.5)
+        this.heritage = this.resources.items.heritage.scene.children[0]
         this.heritage.rotation.y = Math.PI * 0.5
         this.scene.add(this.heritage)
+    }
+
+    setHeritageCollider()
+    {
+        this.collider = this.resources.items.collider.scene.children[0]
+        this.collider.material = new THREE.MeshBasicMaterial({ visible: false })
+        this.heritage.add(this.collider)
     }
 
     setMaterials()
@@ -27,17 +34,17 @@ export default class Heritage
         {
             if (child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial)
             {
-                child.material.envMapIntensity = 2.5
-                child.castShadow = true
-                child.receiveShadow = true
-                child.material.needsUpdate = true
+                const colorMap = child.material.map
+                child.material = new THREE.MeshBasicMaterial({
+                    map: colorMap
+                })
             }
         })
     }
 
     update()
     {
-        
+
     }
 
 }

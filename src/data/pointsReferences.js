@@ -17,7 +17,7 @@ export default [
             the flood. The Vatican Museums suggest that the 
             composition was inspired by an Alexandrian sculpture 
             described by Pliny; this relationship is probable, not certain.`,
-        coordinates: { x: 1.55, y: 0.3, z: - 0.6 },
+        coordinates: { x: 0.2, y: 1.1, z: -0.8 },
     },
     {
         index: 2,
@@ -33,7 +33,7 @@ export default [
             decorative companions. A cubit is a historical unit 
             of length. The symbolism concerns flood height; it 
             does not mean every annual flood reached exactly the same level.`,
-        coordinates: { x: 0.5, y: 0.8, z: - 1.6 },
+        coordinates: { x: -0.15, y: 1.85, z: -0.65 },
     },
     {
         index: 3,
@@ -47,7 +47,7 @@ export default [
             characterizes the river as a beneficent power sustaining 
             Egypt. The cornucopia communicates abundance generally; 
             avoid identifying individual fruits unless they are clearly documented.`,
-        coordinates: { x: 1.6, y: - 1.3, z: - 0.7 },
+        coordinates: { x: 0.05, y: 1.3, z: -1.9 },
     },
     {
         index: 4,
@@ -62,7 +62,7 @@ export default [
             supports a harvest. Explain this together with the children's 
             flood symbolism, while keeping the grain and the cornucopia 
             identifiable as separate attributes.`,
-        coordinates: { x: 2, y: 1, z: 0 },
+        coordinates: { x: 0.2, y: 0.9, z: 0.5 },
     },
     {
         index: 5,
@@ -75,7 +75,7 @@ export default [
             It helps viewers identify which river the figure personifies. 
             The museum does not identify the sphinx as a portrait of a 
             particular ruler, so do not assign it a pharaoh's name.`,
-        coordinates: { x: 2, y: 0.8, z: 0 },
+        coordinates: { x: 0.6, y: 0.6, z: -1.7 },
     },
     {
         index: 6,
@@ -89,6 +89,6 @@ export default [
             scenes on the back. These motifs evoke the river's environment. 
             They are an artistic representation of Egypt, rather than a literal 
             map or a documentary record of everyday life.`,
-        coordinates: { x: 2, y: 0.6, z: 0 },
+        coordinates: { x: -0.9, y: 0.2, z: 0.2 },
     },
 ]

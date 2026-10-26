@@ -8,3 +8,19 @@
     max-width: 80%;         /*So that it takes up 80% of the available space*/
     word-break: break-word; /*This lets the question to break into multiple lines*/
 }
+
+.llmAnswer.waiting
+{
+    animation: pulseLLMAnswer 3s infinite ease-in-out;
+}
+
+@keyframes pulseLLMAnswer {
+  0%, 100% {
+    background-color: #ffffff25;
+    color: #ffffff;
+  }
+  50% {
+    background-color: #ffffff;
+    color: #000000;
+  }
+}

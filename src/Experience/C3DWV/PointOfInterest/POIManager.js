@@ -5,9 +5,10 @@ import pointsReferences from '../../../data/pointsReferences.js'
 
 export default class PointsOfInterest
 {
-    constructor()
+    constructor(heritage)
     {
         this.rayCaster = new Raycaster()
+        this.heritage = heritage
 
         this.initPoints()
         this.setEventListeners()
@@ -23,7 +24,9 @@ export default class PointsOfInterest
                 point.index,
                 point.description,
                 point.coordinates,
-                this.rayCaster
+                this.rayCaster,
+                this.heritage
+                
             )
             this.pointsOfInterest.push(pointOfInterest)
         }

@@ -21,14 +21,5 @@
 
 .inputField:disabled {
   cursor: not-allowed;
-  animation: pulse 3s infinite ease-in-out;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    background-color: #ffffff;
-  }
-  50% {
-    background-color: #aaaaaa; 
-  }
+  background-color: #ffffff;
 }

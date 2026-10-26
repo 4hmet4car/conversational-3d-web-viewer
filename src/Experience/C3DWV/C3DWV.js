@@ -13,9 +13,9 @@ export default class World
 
     init()
     {
-        this.environment = new Environment()
+        // this.environment = new Environment()
         this.heritage = new Heritage()
-        this.POIManager = new POIManager()
+        this.POIManager = new POIManager(this.heritage)
     }
 
     resize()

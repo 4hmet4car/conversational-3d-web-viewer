@@ -1,19 +1,20 @@
 import * as THREE from 'three'
 
 export const CAMERA = {
-    FOV: 75,
-    POSITION_X: 4,
-    POSITION_Y: 1,
-    POSITION_Z: -4,
+    FOV: 35,
+    POSITION_X: 5.8,
+    POSITION_Y: 3.3,
+    POSITION_Z: -2.3,
     NEAR: 0.1,
     FAR: 100,
     ZOOM: 1,
 }
 
 export const ORBIT_CONTROLS = {
-    TARGET_X: 0,
-    TARGET_Y: 0,
-    TARGET_Z: 0,
+    TARGET_X: -0.35,
+    TARGET_Y: 0.4,
+    TARGET_Z: -0.15,
+    MAX_POLAR_ANGLE: 0.5 * Math.PI,
 }
 
 export const RENDERER = {
@@ -21,7 +22,7 @@ export const RENDERER = {
     ANTIALIAS: true,
     OUTPUT_COLOR_SPACE: THREE.SRGBColorSpace,
     SHADOWMAP: {
-        ENABLED: true,
+        ENABLED: false,
         TYPE: THREE.PCFShadowMap,
         AUTO_UPDATE: false,
         NEEDS_UPDATE: true,

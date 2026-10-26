@@ -19,23 +19,33 @@ export default [
     //     type: 'image',
     //     path: '/glow.png'
     // },
+    // {
+    //     name: 'environmentMapTexture',
+    //     type: 'cubeTexture',
+    //     path: [
+    //         '/textures/environmentMaps/3/px.jpg',
+    //         '/textures/environmentMaps/3/nx.jpg',
+    //         '/textures/environmentMaps/3/py.jpg',
+    //         '/textures/environmentMaps/3/ny.jpg',
+    //         '/textures/environmentMaps/3/pz.jpg',
+    //         '/textures/environmentMaps/3/nz.jpg',
+    //     ]
+    // },
     {
-        name: 'environmentMapTexture',
-        type: 'cubeTexture',
-        path: [
-            '/textures/environmentMaps/3/px.jpg',
-            '/textures/environmentMaps/3/nx.jpg',
-            '/textures/environmentMaps/3/py.jpg',
-            '/textures/environmentMaps/3/ny.jpg',
-            '/textures/environmentMaps/3/pz.jpg',
-            '/textures/environmentMaps/3/nz.jpg',
-        ]
+        name: 'collider',
+        type: 'dracoModel',
+        path: '/models/nileCollider.glb'
     },
     {
         name: 'heritage',
-        type: 'gltfModel',
-        path: '/models/DamagedHelmet/glTF/DamagedHelmet.gltf'
+        type: 'dracoModel',
+        path: '/models/nile.glb'
     },
+    // {
+    //     name: 'heritage',
+    //     type: 'gltfModel',
+    //     path: '/models/DamagedHelmet/glTF/DamagedHelmet.gltf'
+    // },
     // {
     //     name: 'displacementMap',
     //     type: 'texture',
@@ -55,11 +65,6 @@ export default [
     //     name: 'pictureTexture4',
     //     type: 'texture',
     //     path: '/picture-4.png'
-    // },
-    // {
-    //     name: 'gears',
-    //     type: 'dracoModel',
-    //     path: '/gears.glb'
     // },
     // {
     //     name: 'spruitSunrise',
