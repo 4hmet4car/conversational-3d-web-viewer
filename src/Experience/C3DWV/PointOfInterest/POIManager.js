@@ -1,7 +1,7 @@
 import { Raycaster } from 'three'
 import PointOfInterest from './PointOfInterest.js'
 
-import points from '../../../data/points.js'
+import pointsReferences from '../../../data/pointsReferences.js'
 
 export default class PointsOfInterest
 {
@@ -17,7 +17,7 @@ export default class PointsOfInterest
     {
         this.pointsOfInterest = []
 
-        for (const point of points)
+        for (const point of pointsReferences)
         {
             const pointOfInterest = new PointOfInterest(
                 point.index,
@@ -56,6 +56,14 @@ export default class PointsOfInterest
         for (const pointOfInterest of this.pointsOfInterest)
         {
             pointOfInterest.update()
+        }
+    }
+
+    resize()
+    {
+        for (const pointOfInterest of this.pointsOfInterest)
+        {
+            pointOfInterest.resize()
         }
     }
 }

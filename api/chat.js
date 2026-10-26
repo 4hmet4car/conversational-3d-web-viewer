@@ -1,4 +1,8 @@
-import { GoogleGenAI } from "@google/genai"
+import { GoogleGenAI } from '@google/genai'
+
+import pointsReferences from '../src/data/pointsReferences.js'
+import heritageReference from '../src/data/heritageReference.js'
+import systemInstructions from '../src/data/systemInstructions.js'
 
 function verifyPostMethod(request, response, next)
 {
@@ -127,25 +131,91 @@ function validateParsedData(request, response, next)
 {
     response.setHeader('Content-Type', 'application/json')
 
+    const data = request.parsedBody
+
     if (
-        request.parsedBody === null ||
-        typeof request.parsedBody.question !== 'string' ||
-        !request.parsedBody.question.trim() ||
-        request.parsedBody.question.length > 500
+        data === null ||
+        typeof data !== 'object' ||
+        Array.isArray(data)
     )
     {
         response.statusCode = 400
-        response.end(JSON.stringify({ error: 'Question must contain 1-500 characters' }))
+        response.end(JSON.stringify({
+            error: 'Expected a JSON object'
+        }))
         return
     }
+
+    if (
+        typeof data.question !== 'string' ||
+        !data.question.trim() ||
+        data.question.length > 500
+    )
+    {
+        response.statusCode = 400
+        response.end(JSON.stringify({
+            error: 'Question must contain 1-500 characters'
+        }))
+        return
+    }
+
+    // This searches POI array for the index sent by the frontend. 
+    // If no matching POI exists, it rejects the request.
+    const selectedPoint = pointsReferences.find((point) =>
+    {
+        return point.index === data.pointIndex
+    })
+
+    if (!selectedPoint)
+    {
+        response.statusCode = 400
+        response.end(JSON.stringify({
+            error: 'Unknown point of interest'
+        }))
+        return
+    }
+
+    if (
+        !Array.isArray(data.chatHistory) ||
+        data.chatHistory.length > 2
+    )
+    {
+        response.statusCode = 400
+        response.end(JSON.stringify({
+            error: 'History must contain at most two exchanges'
+        }))
+        return
+    }
+
+    for (const exchange of data.chatHistory)
+    {
+        if (
+            exchange === null ||
+            typeof exchange !== 'object' ||
+            typeof exchange.question !== 'string' ||
+            !exchange.question.trim() ||
+            exchange.question.length > 500 ||
+            typeof exchange.answer !== 'string' ||
+            !exchange.answer.trim() ||
+            exchange.answer.length > 4000
+        )
+        {
+            response.statusCode = 400
+            response.end(JSON.stringify({
+                error: 'Invalid conversation history'
+            }))
+            return
+        }
+    }
+
+    // Make the selected reference available to the response handler.
+    request.selectedPoint = selectedPoint
 
     next()
 }
 
 async function simplyRespond(request, response)
 {
-    // response is the Node.js HTTP response object.
-    // Tell the client that the response body contains JSON.
     response.setHeader('Content-Type', 'application/json')
 
     try
@@ -154,9 +224,47 @@ async function simplyRespond(request, response)
             apiKey: process.env.GEMINI_API_KEY
         })
 
+        const contents = []
+
+        // Add previous questions and answers in chronological order.
+        for (const exchange of request.parsedBody.chatHistory)
+        {
+            contents.push({
+                role: 'user',
+                parts: [{ text: exchange.question }]
+            })
+
+            contents.push({
+                role: 'model',
+                parts: [{ text: exchange.answer }]
+            })
+        }
+
+        // The current question comes after the previous exchanges.
+        contents.push({
+            role: 'user',
+            parts: [{ text: request.parsedBody.question }]
+        })
+
+        const instructions = `
+            ${systemInstructions}
+
+            WHOLE OBJECT REFERENCE
+            ${heritageReference}
+
+            SELECTED POINT OF INTEREST
+            ${request.selectedPoint.description}
+
+            SELECTED POINT REFERENCE
+            ${request.selectedPoint.reference}
+        `
+
         const result = await ai.models.generateContent({
             model: 'gemini-3.5-flash-lite',
-            contents: request.parsedBody.question
+            contents: contents,
+            config: {
+                systemInstruction: instructions
+            }
         })
 
         const answer = result.text
@@ -170,20 +278,24 @@ async function simplyRespond(request, response)
             return
         }
 
-        // Send the JSON text and mark the response as complete.
-        response.end(JSON.stringify({ answer: answer }))
+        response.end(JSON.stringify({
+            answer: answer
+        }))
     }
     catch (error)
     {
         console.error('Gemini request failed:', error)
 
         response.statusCode = 502
-        response.end(JSON.stringify({ error: 'Could not get an answer from Gemini' }))
+        response.end(JSON.stringify({
+            error: 'Could not get an answer from Gemini'
+        }))
     }
 }
 
 
-// Vercel’s file-routing convention tells it: Requests to /api/chat should invoke the default export from api/chat.js
+// Vercel’s file-routing convention is:
+// Requests to /api/chat should invoke the default export from api/chat.js
 export default function handleChat(request, response)
 {
     verifyPostMethod(request, response, () =>

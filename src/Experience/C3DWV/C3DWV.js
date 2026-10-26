@@ -20,10 +20,10 @@ export default class World
 
     resize()
     {
-        // if (this.particles)
-        // {
-        //     this.particles.resize()
-        // }
+        if (this.POIManager)
+        {
+            this.POIManager.resize()
+        }
     }
 
     update()

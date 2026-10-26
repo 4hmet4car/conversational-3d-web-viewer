@@ -12,14 +12,19 @@ export default class PointOfInterest extends EventEmitter
         this.camera = this.experience.camera
         this.scene = this.experience.scene
         this.sizes = this.experience.sizes
+
+        this.pointIndex = pointIndex
+        this.pointDescription = pointDescription
+        this.pointCoordinates = pointCoordinates
         this.rayCaster = rayCaster
 
-        this.setPointOfInterest(pointCoordinates)
-        this.setAnchor(pointIndex)
+        this.setPointOfInterest(this.pointCoordinates)
+        this.setAnchor(this.pointIndex)
         this.setChatBox()
-        this.setPointDescription(pointDescription)
+        this.setPointDescription(this.pointDescription)
         this.setInputField()
-        this.addEventListeners()
+        this.addDocumentEventListeners()
+        this.addCameraEventListeners()
     }
 
     setPointOfInterest(pointCoordinates)
@@ -28,7 +33,12 @@ export default class PointOfInterest extends EventEmitter
         this.pointOfInterest.classList.add('pointOfInterest')
         document.body.appendChild(this.pointOfInterest)
 
-        this.coordinates = pointCoordinates
+        this.coordinates = new Vector3(
+            pointCoordinates.x,
+            pointCoordinates.y,
+            pointCoordinates.z
+        )
+
         this.screenCoordinates = new Vector3()
         this.active = false
     }
@@ -39,6 +49,7 @@ export default class PointOfInterest extends EventEmitter
         this.anchor.type = 'button'
         this.anchor.classList.add('anchor')
         this.anchor.textContent = pointIndex
+
         this.pointOfInterest.appendChild(this.anchor)
     }
 
@@ -46,15 +57,19 @@ export default class PointOfInterest extends EventEmitter
     {
         this.chatBox = document.createElement('div')
         this.chatBox.classList.add('chatBox')
+
         this.pointOfInterest.appendChild(this.chatBox)
+
+        this.chatHistory = []
     }
 
-    setPointDescription(pointDescription)
+    setPointDescription(description)
     {
-        this.pointDescription = document.createElement('div')
-        this.pointDescription.classList.add('llmAnswer')
-        this.pointDescription.textContent = pointDescription
-        this.chatBox.appendChild(this.pointDescription)
+        this.description = document.createElement('div')
+        this.description.classList.add('llmAnswer')
+        this.description.textContent = description
+
+        this.chatBox.appendChild(this.description)
     }
 
     setInputField()
@@ -64,28 +79,35 @@ export default class PointOfInterest extends EventEmitter
         this.inputField.maxLength = 500
         this.inputField.classList.add('inputField')
         this.inputField.placeholder = 'Ask about this...'
+
         this.pointOfInterest.appendChild(this.inputField)
     }
 
-    addEventListeners()
+    addDocumentEventListeners()
     {
         this.anchor.addEventListener('click', () =>
         {
             this.active = !this.active
+
             this.pointOfInterest.classList.toggle('active', this.active)
             this.chatBox.classList.toggle('visible', this.active)
             this.inputField.classList.toggle('visible', this.active)
+
             this.trigger('clicked')
         })
 
         this.inputField.addEventListener('keydown', (event) =>
         {
-            // event.isComposing is for users that use IME (Input Method Editor)
-            // IME is used for special characters in Japanese, Chinese etc.
+            // Avoid submitting while Enter is being used to compose text.
+            // Input Method Editors (IMEs) are commonly used for languages
+            // such as Japanese and Chinese.
             if (event.key === 'Enter' && !event.isComposing)
             {
                 const message = this.inputField.value.trim()
-                if (!message) return
+
+                if (!message)
+                    return
+
                 this.askQuestion(message)
                 this.inputField.value = ''
             }
@@ -97,46 +119,61 @@ export default class PointOfInterest extends EventEmitter
         const userQuestion = document.createElement('div')
         userQuestion.classList.add('userQuestion')
         userQuestion.textContent = question
+
         this.chatBox.appendChild(userQuestion)
-        this.chatBox.scrollTop = this.chatBox.scrollHeight //This scrolls everything down in the div
+
+        // Scroll the chatbox to the latest message.
+        this.chatBox.scrollTop = this.chatBox.scrollHeight
 
         this.requestAnswer(question)
     }
 
-    // This utilizes the fetch api to make a request to the specified end point
-    // Since fetch and response.json() return promises, the method is async
+    // Request an answer from the backend using the Fetch API.
+    // The method is async so it can await fetch() and response.json().
     // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
     async requestAnswer(question)
     {
         this.inputField.disabled = true
+
         const llmAnswer = this.prepareAnswer()
 
         try
         {
-            // fetch() promise resolves when the server responds with headers and status code (initial handshake)
-            // you use post since you are sending data to the backend
-            // you set header since many middleware look at it first to know how to parse the data in the body
-            // you stringify the json object bc you can not sent live json object with http but only rough text
+            // fetch() resolves when the response status and headers are available.
+            // POST sends the question and recent history in the request body.
+            // Content-Type tells the backend that the body contains JSON.
+            // JSON.stringify() serializes the JavaScript object into JSON text.
             const serverResponse = await fetch('/api/chat', {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ question: question }),
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    pointIndex: this.pointIndex,
+                    question: question,
+
+                    // Send only the two latest completed exchanges
+                    // to limit the history included in the input tokens.
+                    chatHistory: this.chatHistory.slice(-2)
+                })
             })
 
-            // response.ok is true for statuses from 200 through 299
+            // response.ok is true for HTTP status codes from 200 through 299.
             if (!serverResponse.ok)
             {
                 throw new Error(`Response status: ${serverResponse.status}`)
             }
 
-            // response.json() promise resolves when entire text body finishes downloading
-            // .json() is a method that belongs to node.js responses
-            // .json() reads a response body and parses it as a json object
+            // json() belongs to the Fetch API's Response object.
+            // It reads the response body to completion and parses its JSON text.
             const llmServerResponse = await serverResponse.json()
-            this.answerQuestion(llmAnswer, llmServerResponse.answer)
-        } catch (error)
+
+            this.answerQuestion(llmAnswer, llmServerResponse.answer, question)
+        }
+        catch (error)
         {
-            console.error(error.message);
+            console.error(error.message)
+
             this.answerQuestion(llmAnswer, 'Try again later.')
         }
     }
@@ -145,18 +182,33 @@ export default class PointOfInterest extends EventEmitter
     {
         const llmAnswer = document.createElement('div')
         llmAnswer.classList.add('llmAnswer')
-        llmAnswer.textContent = "Waiting answer..."
+        llmAnswer.textContent = 'Waiting answer...'
+
         this.chatBox.appendChild(llmAnswer)
         this.chatBox.scrollTop = this.chatBox.scrollHeight
+
         return llmAnswer
     }
 
-    answerQuestion(llmAnswer, answer)
+    answerQuestion(llmAnswer, answer, question = null)
     {
         llmAnswer.textContent = answer
+
         this.inputField.disabled = false
         this.chatBox.scrollTop = this.chatBox.scrollHeight
-        if (this.active) this.inputField.focus()
+
+        if (question)
+        {
+            this.chatHistory.push({
+                question: question,
+                answer: answer
+            })
+        }
+
+        if (this.active)
+        {
+            this.inputField.focus()
+        }
     }
 
     calculateScreenCoordinates()
@@ -167,8 +219,15 @@ export default class PointOfInterest extends EventEmitter
 
     castRay()
     {
-        this.rayCaster.setFromCamera(this.screenCoordinates, this.camera.instance)
-        this.intersects = this.rayCaster.intersectObjects(this.scene.children, true)
+        this.rayCaster.setFromCamera(
+            this.screenCoordinates,
+            this.camera.instance
+        )
+
+        this.intersects = this.rayCaster.intersectObjects(
+            this.scene.children,
+            true
+        )
     }
 
     togglePointVisibility()
@@ -180,7 +239,10 @@ export default class PointOfInterest extends EventEmitter
         else
         {
             const intersectionDistance = this.intersects[0].distance
-            const pointDistance = this.coordinates.distanceTo(this.camera.instance.position)
+            const pointDistance = this.coordinates.distanceTo(
+                this.camera.instance.position
+            )
+
             if (intersectionDistance < pointDistance)
             {
                 this.anchor.classList.remove('visible')
@@ -204,17 +266,44 @@ export default class PointOfInterest extends EventEmitter
             `
     }
 
-    update()
+    addCameraEventListeners()
     {
+        this.needsPlacement = true
+
+        this.camera.controls.addEventListener('change', () =>
+        {
+            this.needsPlacement = true
+        })
+    }
+
+    placePointOfInterest()
+    {
+        this.camera.instance.updateWorldMatrix(true, false)
+
         this.calculateScreenCoordinates()
         this.castRay()
         this.togglePointVisibility()
         this.move()
     }
 
+    update()
+    {
+        if (!this.needsPlacement)
+            return
+
+        this.placePointOfInterest()
+        this.needsPlacement = false
+    }
+
+    resize()
+    {
+        this.placePointOfInterest()
+    }
+
     deactivate()
     {
         this.active = false
+
         this.pointOfInterest.classList.remove('active')
         this.chatBox.classList.remove('visible')
         this.inputField.classList.remove('visible')
