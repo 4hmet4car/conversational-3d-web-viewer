@@ -4,6 +4,8 @@ import pointsReferences from '../src/data/pointsReferences.js'
 import heritageReference from '../src/data/heritageReference.js'
 import systemInstructions from '../src/data/systemInstructions.js'
 
+const MAX_BODY_BYTES = 16 * 1024
+
 function verifyPostMethod(request, response, next)
 {
     // 405 is the "Method Not Allowed" client error response status code.
@@ -53,6 +55,16 @@ function parseRequestBody(request, response, next)
             return
         }
 
+        // Check the size of the body already parsed by Vercel.
+        const bodyText = JSON.stringify(request.parsedBody)
+
+        if (Buffer.byteLength(bodyText, 'utf8') > MAX_BODY_BYTES)
+        {
+            response.statusCode = 413
+            response.end(JSON.stringify({ error: 'Request too large' }))
+            return
+        }
+
         next()
         return // Skip the local stream-reading code below.
     }
@@ -77,7 +89,7 @@ function parseRequestBody(request, response, next)
 
         // Check whether the request body exceeds the chosen byte limit.
         // The 2000-byte limit is arbitrary and applies to the entire JSON body.
-        if (Buffer.byteLength(body) > 2000)
+        if (Buffer.byteLength(body) > MAX_BODY_BYTES)
         {
             rejectData = true
             body = ''

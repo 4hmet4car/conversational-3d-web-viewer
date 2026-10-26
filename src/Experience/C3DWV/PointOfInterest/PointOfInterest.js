@@ -159,6 +159,18 @@ export default class PointOfInterest extends EventEmitter
                 })
             })
 
+            // This handles Vercel's rate limiting
+            if (serverResponse.status === 429)
+            {
+                this.answerQuestion(
+                    llmAnswer,
+                    'Too many questions. Please wait a moment.'
+                )
+
+                this.inputField.value = question
+                return
+            }
+
             // response.ok is true for HTTP status codes from 200 through 299.
             if (!serverResponse.ok)
             {
