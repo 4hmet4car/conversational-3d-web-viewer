@@ -56,3 +56,9 @@ export const LOADING_BAR = {
         FADE_OUT_DURATION: 2
     },
 }
+
+export const HERITAGE = {
+    MESH: {        
+        ROTATION_Y: Math.PI * 0.5,
+    },
+}

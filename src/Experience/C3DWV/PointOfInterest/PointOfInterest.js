@@ -219,11 +219,6 @@ export default class PointOfInterest extends EventEmitter
                 answer: answer
             })
         }
-
-        if (this.active)
-        {
-            this.inputField.focus()
-        }
     }
 
     calculateScreenCoordinates()

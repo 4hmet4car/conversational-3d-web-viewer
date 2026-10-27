@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import Experience from "../Experience.js"
+import { HERITAGE } from '../constants.js'
 
 export default class Heritage
 {
@@ -17,7 +18,7 @@ export default class Heritage
     setHeritage()
     {
         this.heritage = this.resources.items.heritage.scene.children[0]
-        this.heritage.rotation.y = Math.PI * 0.5
+        this.heritage.rotation.y = HERITAGE.MESH.ROTATION_Y
         this.scene.add(this.heritage)
     }
 

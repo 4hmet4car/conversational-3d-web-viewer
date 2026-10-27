@@ -175,6 +175,14 @@ The content is **curated in source files**, not obtained from an external retrie
 
 See [CHANGELOG.md](./CHANGELOG.md) for the comparison between the earlier Columbarium prototype and the v1.1 Nile / Gemini implementation.
 
+## TO-DO
+
+See [TODO.md](./TODO.md) for planned improvements and known issues.
+
 ## License
 
 The package currently declares `"license": "UNLICENSED"`. Do not assume permission for redistribution or reuse of code or 3D assets without the appropriate authorization.
+
+## Credits
+
+This work uses ["Nile"](https://sketchfab.com/3d-models/nile-42e02439c61049d681c897441d40aaa1) by [Rigsters](https://sketchfab.com/rigsters) licensed under [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)
