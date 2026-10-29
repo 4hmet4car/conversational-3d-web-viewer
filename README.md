@@ -41,7 +41,7 @@ cd conversational-3d-web-viewer
 npm install
 ```
 
-Create a `.env` file **in the repository root**:
+Rename the `.env.example` file in the repository root to `.env.local` and put your api key in it:
 
 ```dotenv
 GEMINI_API_KEY=your_api_key_here
